@@ -248,59 +248,34 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
   };
 
   return (
-    <main className="flex flex-col items-center min-h-screen p-4 text-slate-900 ">
+    <main className="flex flex-col items-center min-h-screen p-2 text-slate-900 ">
       <div ref={contentRef} className="w-full flex flex-col">
         {section && (
-          <>
-            <h2
-              style={{
-                marginTop: "12px",
-                marginBottom: "20px",
-                textAlign: "center",
-              }}
-            >
-              {section} Students Details
-            </h2>
-            <p style={{ textAlign: "center" }}>
-              Academic Year : {academicyear}
-            </p>
-            <p style={{ textAlign: "center" }}>Date : {getDate()}</p>
+          <section className="w-full h-auto flex flex-col justify-center items-center">
+            <h2>{section} Students Details</h2>
+            <p>Academic Year : {academicyear}</p>
+            <p>Date : {getDate()}</p>
             <h3 className="p-2 rounded-lg bg-slate-400 dark:bg-slate-900 text-lg text-slate-900 dark:text-slate-200 flex felx-row justify-evenly items-center my-2 w-80 h-auto self-center">
               {selectTeach}
               <span className="badge badge-lg badge-success">Active</span>
             </h3>
-          </>
+          </section>
         )}
         {error && (
-          <div
-            className="alert alert-danger"
-            role="alert"
-            style={{
-              marginTop: "10px",
-              marginBottom: "10px",
-              width: "50%",
-              margin: "0 auto",
-            }}
-          >
+          <div className="alert alert-danger" role="alert">
             Error while fetching Data...
           </div>
         )}
         {loading && (
           <>
             <center>
-              <div
-                className="spinner-border"
-                role="status"
-                style={{ marginTop: "18px" }}
-              ></div>
-              <br></br>
               <span className=" loading loading-spinner loading-lg"></span>
             </center>
           </>
         )}
         {sectiondata && !loading && (
-          <section>
-            <table className="table table-xs  text-slate-900 " id="myTable">
+          <div className="overflow-x-auto">
+            <table className="table table-xs text-slate-900 " id="myTable">
               <thead>
                 <tr className="text-md font-bold text-slate-900 bg-slate-50">
                   <th scope="col">RollNumber</th>
@@ -326,9 +301,9 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
 
                   return (
                     index !== 0 && (
-                      <tr key={index} className="bg-slate-50">
+                      <tr key={index} className="bg-slate-50 text-md">
                         <td>{data.RollNumber}</td>
-                        {/* <td>{data.Name}</td> */}
+
                         <td>
                           {data.I === "Absent" ? (
                             <button className=" bg-red-500 p-1 px-2 rounded-md">
@@ -420,7 +395,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                 })}
               </tbody>
             </table>
-          </section>
+          </div>
         )}
       </div>
       <div className="flex flex-row flex-wrap justify-center items-center gap-2">
