@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container-fluid li a:hover {
+
+  color: white;
+  font-weight: 460;
+
+  transition: 0.3s ease;
+
+}
+
+.container-fluid li a:focus {
+  color: white;
+  border-bottom: 4px solid #fff;
+  transition: 0.3s ease;
+
+}
+
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+.App {
+  background-color: rgb(213, 211, 211);
+  min-height: 100vh;
+}
+
+.main-container {
+  padding-bottom: 10px;
+  background-color: white;
+  min-width: 50%;
+  max-width: 50%;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.font-sora {
+  font-family: 'Sora';
+}
