@@ -8,6 +8,7 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
   const [sections, setSections] = useState([]);
   const [selectedsec, setSelectedsec] = useState();
   const [teach, setTeach] = useState([]);
+  const [isloading, setIsloading] = useState(false);
   const fromd = useRef("2019");
   const tod = useRef("2023");
 
@@ -45,7 +46,9 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
   const handlesectionDropdown = async (e) => {
     setSelectedsec(e.target.value);
     console.log(e.target.value);
+    setIsloading(true);
     await getteachdata(e.target.value);
+    setIsloading(false);
   };
 
   const handleselecteach = async (e) => {
@@ -174,35 +177,40 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
             </select>
           </section>
         )}
-        {teach && (
-          <section className="my-2">
-            <label class="label" htmlFor="section" aria-required>
-              <span class="label-text text-lg text-slate-300">
-                Please select Teacher Name
-              </span>
-              <span class="label-text-alt text-red-500">Required</span>
-            </label>
-            <select
-              name="section"
-              id="section"
-              onChange={(e) => handleselecteach(e)}
-              style={{ cursor: "pointer" }}
-              className="select select-bordered select-md w-full rounded-lg text-slate-900 dark:text-slate-100"
-            >
-              <option disabled selected>
-                Select Teacher Name{" "}
-                <span className="loading loading-spinner loading-xs bg-slate-50"></span>
-              </option>
-              {teach.map((n, i) => {
+
+        <section className="my-2">
+          <label class="label" htmlFor="section" aria-required>
+            <span class="label-text text-lg text-slate-300">
+              Please select Teacher Name
+            </span>
+            <span class="label-text-alt text-red-500">Required</span>
+          </label>
+
+          <select
+            name="section"
+            id="section"
+            onChange={(e) => handleselecteach(e)}
+            style={{ cursor: "pointer" }}
+            className="select select-bordered select-md w-full rounded-lg text-slate-900 dark:text-slate-100"
+          >
+            <option disabled selected>
+              Select Teacher Name{" "}
+            </option>
+            {teach && !isloading ? (
+              teach.map((n, i) => {
                 return (
                   <option value={n} key={i}>
                     {n}
                   </option>
                 );
-              })}
-            </select>
-          </section>
-        )}
+              })
+            ) : (
+              <option>
+                <p className=" text-lg self-center ">Loading...</p>
+              </option>
+            )}
+          </select>
+        </section>
 
         {/* <Link to={`/${academicyear}/${selectedsec}`}> */}
         <button
