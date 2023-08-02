@@ -6,9 +6,8 @@ import html2pdf from "html2pdf.js";
 import { export_table_to_csv } from "./Html2CSV";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
-function DisplayStudentsDetails({ branch, selectTeach }) {
+function DisplayStudentsDetails({ branch, selectTeach, period }) {
   const { pathname } = useLocation();
-
   const academicyear = useParams().academicyear;
   const section = useParams().sec;
   const [loading, setLoading] = useState(false);
@@ -241,10 +240,8 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
   const clearSelection = () => {
     setLoading(true);
     localStorage.clear();
-    window.location.reload();
-    setInterval(() => {
-      navigate("/");
-    }, 2000);
+    //window.location.reload();
+    navigate("/");
   };
 
   return (
@@ -279,7 +276,6 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
               <thead>
                 <tr className="text-md font-bold text-slate-900 bg-slate-50">
                   <th scope="col">RollNumber</th>
-                  {/* <th scope="col">Name</th> */}
                   <th scope="col">I</th>
                   <th scope="col">II</th>
                   <th scope="col">III</th>
@@ -314,6 +310,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                               type={"checkbox"}
                               className="checkbox checkbox-success bg-slate-200 border-2 border-slate-400"
                               checked={true}
+                              disabled={period != "I" ? true : false}
                               onChange={() => handlebutton(data.RollNumber, 1)}
                             />
                           )}
@@ -328,6 +325,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                               type={"checkbox"}
                               className="checkbox checkbox-success bg-slate-200 border-2 border-slate-400"
                               checked={true}
+                              disabled={period != "II" ? true : false}
                               onChange={() => handlebutton(data.RollNumber, 2)}
                             />
                           )}
@@ -342,6 +340,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                               type={"checkbox"}
                               className="checkbox checkbox-success bg-slate-200 border-2 border-slate-400"
                               checked={true}
+                              disabled={period != "III" ? true : false}
                               onChange={() => handlebutton(data.RollNumber, 3)}
                             />
                           )}
@@ -356,6 +355,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                               type={"checkbox"}
                               className="checkbox checkbox-success bg-slate-200 border-2 border-slate-400"
                               checked={true}
+                              disabled={period != "IV" ? true : false}
                               onChange={() => handlebutton(data.RollNumber, 4)}
                             />
                           )}
@@ -370,6 +370,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                               type={"checkbox"}
                               className="checkbox checkbox-success bg-slate-200 border-2 border-slate-400"
                               checked={true}
+                              disabled={period != "V" ? true : false}
                               onChange={() => handlebutton(data.RollNumber, 5)}
                             />
                           )}
@@ -384,6 +385,7 @@ function DisplayStudentsDetails({ branch, selectTeach }) {
                               type={"checkbox"}
                               className="checkbox checkbox-success bg-slate-200 border-2 border-slate-400"
                               checked={true}
+                              disabled={period != "VI" ? true : false}
                               onChange={() => handlebutton(data.RollNumber, 6)}
                             />
                           )}

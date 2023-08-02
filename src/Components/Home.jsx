@@ -1,27 +1,40 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, redirect, Link } from "react-router-dom";
 import { FaInfoCircle } from "react-icons/fa";
 import axios from "axios";
-function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
+function Home({
+  setAcademicyear,
+  academicyear,
+  setSelectTeach,
+  setBranch,
+  setPeriod,
+}) {
   const navigate = useNavigate();
   const [submit, setSubmit] = useState(true);
   const [sections, setSections] = useState([]);
   const [selectedsec, setSelectedsec] = useState();
   const [teach, setTeach] = useState([]);
   const [isloading, setIsloading] = useState(false);
-  const fromd = useRef("2019");
-  const tod = useRef("2023");
+
+  const [fromd, setFromd] = useState(2019);
+  const [tod, setTod] = useState(2023);
 
   const getteachdata = async (name) => {
-    const url = `${import.meta.env.VITE_REACT_APP_PROF}?year=${
-      fromd.current.value
-    }&sec=${name}`;
+    const url = `${
+      import.meta.env.VITE_REACT_APP_PROF
+    }?year=${fromd}&sec=${name}`;
     console.log(url);
     const data = await axios.get(url);
     const d = data.data.data[0];
     setTeach([...d.slice(1, d.length)]);
     console.log([...d.slice(1, d.length)]);
   };
+
+  useEffect(() => {
+    if (fromd >= 2019) {
+      setTod(parseInt(fromd) + 4);
+    }
+  }, [fromd]);
 
   const handlebranchDropdown = (e) => {
     console.log(e.target.value);
@@ -54,17 +67,17 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
   const handleselecteach = async (e) => {
     e.preventDefault();
     setSelectTeach(e.target.value);
-    setAcademicyear(`${fromd.current.value}-${tod.current.value}`);
+    setAcademicyear(`${fromd}-${tod}`);
     setSubmit(false);
   };
   //console.log(sections)
   return (
     <main className="flex flex-col items-center w-full min-h-screen">
       <h3 className=" text-xl text-slate-900 font-sora font-bold m-2">
-        Welcome to CVR College studence attendance management portal
+        Welcome to CVR College students attendance management portal
       </h3>
 
-      <section className="flex flex-col flex-shrink-0 cursor-pointer bg-gray-600 p-4  w-80 h-auto text-md text-slate-100 font-sora my-4 lg:w-1/2  rounded-lg shadow-md shadow-slate-800 ">
+      <form className="flex flex-col flex-shrink-0 cursor-pointer bg-gray-600 p-4  w-80 h-auto text-md text-slate-100 font-sora my-4 lg:w-1/2  rounded-lg shadow-md shadow-slate-800 ">
         <section className=" my-2">
           <label class="label" htmlFor="academic-year" aria-required>
             <span class="label-text text-lg text-slate-300">
@@ -100,8 +113,9 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
                 max="2022"
                 className="input input-boarded w-28 px-2 text-slate-900 dark:text-slate-100"
                 placeholder="eg.2020"
-                /* onChange={(e) => setFromd(e.target.value)} */
-                ref={fromd}
+                onChange={(e) => setFromd(e.target.value)}
+                value={fromd}
+                required
               />
             </section>
 
@@ -116,8 +130,9 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
                 max="2026"
                 className="input input-boarded w-28 px-2 text-slate-900 dark:text-slate-100"
                 placeholder="eg.2024"
-                /* onChange={(e) => setTod(e.target.value)} */
-                ref={tod}
+                value={tod}
+                required
+                disabled
               />
             </section>
           </section>
@@ -137,6 +152,7 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
               onChange={(e) => handlebranchDropdown(e)}
               style={{ cursor: "pointer" }}
               className="select select-bordered select-md w-full rounded-lg text-slate-900 dark:text-slate-100"
+              required
             >
               <option disabled selected>
                 Select branch
@@ -163,6 +179,7 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
               onChange={(e) => handlesectionDropdown(e)}
               style={{ cursor: "pointer" }}
               className="select select-bordered select-md w-full rounded-lg text-slate-900 dark:text-slate-100"
+              required
             >
               <option disabled selected>
                 Select Section
@@ -181,6 +198,33 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
         <section className="my-2">
           <label class="label" htmlFor="section" aria-required>
             <span class="label-text text-lg text-slate-300">
+              Please select Period Number
+            </span>
+            <span class="label-text-alt text-red-500">Required</span>
+          </label>
+
+          <select
+            name="period"
+            id="period"
+            onChange={(e) => setPeriod(e.currentTarget.value)}
+            className="select select-bordered select-md w-full rounded-lg text-slate-900 dark:text-slate-100"
+            required
+          >
+            <option disabled selected>
+              Select Period Number{" "}
+            </option>
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+            <option value="VI">VI</option>
+          </select>
+        </section>
+
+        <section className="my-2">
+          <label class="label" htmlFor="section" aria-required>
+            <span class="label-text text-lg text-slate-300">
               Please select Teacher Name
             </span>
             <span class="label-text-alt text-red-500">Required</span>
@@ -192,6 +236,7 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
             onChange={(e) => handleselecteach(e)}
             style={{ cursor: "pointer" }}
             className="select select-bordered select-md w-full rounded-lg text-slate-900 dark:text-slate-100"
+            required
           >
             <option disabled selected>
               Select Teacher Name{" "}
@@ -226,7 +271,7 @@ function Home({ setAcademicyear, academicyear, setSelectTeach, setBranch }) {
           <FaInfoCircle className="text-sm text-sky-400" />{" "}
           <p>Please fill all queries to enable submit button</p>
         </section>
-      </section>
+      </form>
     </main>
   );
 }

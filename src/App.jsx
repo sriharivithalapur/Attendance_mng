@@ -9,6 +9,7 @@ function App() {
   const [academicyear, setAcademicyear] = useState("");
   const [branch, setBranch] = useState("");
   const [selectTeach, setSelectTeach] = useState("");
+  const [period, setPeriod] = useState("");
   return (
     <div className="App">
       <Router>
@@ -28,6 +29,7 @@ function App() {
                 setAcademicyear={setAcademicyear}
                 setSelectTeach={setSelectTeach}
                 setBranch={setBranch}
+                setPeriod={setPeriod}
               />
             }
           ></Route>
@@ -41,6 +43,7 @@ function App() {
                 branch={branch}
                 setBranch={setBranch}
                 selectTeach={selectTeach}
+                period={period}
               />
             }
           ></Route>
