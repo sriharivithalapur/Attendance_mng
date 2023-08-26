@@ -17,6 +17,7 @@ function DisplayStudentsDetails({ branch, selectTeach, period }) {
   const navigate = useNavigate();
 
   const [sectiondata, setSectiondata] = useState([]);
+  const classno = ["I", "II", "III", "IV", "V", "VI"];
   const getStudentsData = (sec, url, academicyear) => {
     axios
       .get(url)
@@ -30,24 +31,54 @@ function DisplayStudentsDetails({ branch, selectTeach, period }) {
           if (!val) {
             localStorage.setItem(`19${sec}`, JSON.stringify(res.data.data));
             setSectiondata(res.data.data);
+            classno.map((e) => {
+              localStorage.setItem(
+                `${academicyear}${branch}${section}${e}`,
+                ""
+              );
+            });
           } else {
             setSectiondata(val);
+            localStorage.setItem(
+              `${academicyear}${branch}${section}${period}`,
+              selectTeach
+            );
           }
         } else if (academicyear === "2020-2024") {
           const val = JSON.parse(localStorage.getItem(`20${section}`));
           if (!val) {
             localStorage.setItem(`20${sec}`, JSON.stringify(res.data.data));
             setSectiondata(res.data.data);
+            classno.map((e) => {
+              localStorage.setItem(
+                `${academicyear}${branch}${section}${e}`,
+                ""
+              );
+            });
           } else {
             setSectiondata(val);
+            localStorage.setItem(
+              `${academicyear}${branch}${section}${period}`,
+              selectTeach
+            );
           }
         } else if (academicyear === "2021-2025") {
           const val = JSON.parse(localStorage.getItem(`21${section}`));
           if (!val) {
             localStorage.setItem(`21${sec}`, JSON.stringify(res.data.data));
             setSectiondata(res.data.data);
+            classno.map((e) => {
+              localStorage.setItem(
+                `${academicyear}${branch}${section}${e}`,
+                ""
+              );
+            });
           } else {
             setSectiondata(val);
+            localStorage.setItem(
+              `${academicyear}${branch}${section}${period}`,
+              selectTeach
+            );
           }
         }
       })
@@ -185,6 +216,7 @@ function DisplayStudentsDetails({ branch, selectTeach, period }) {
 
   const handlebutton = (rollno, hour) => {
     console.log(rollno, hour);
+
     sectiondata.forEach((data, index) => {
       if (data.RollNumber === rollno) {
         if (hour === 1) {
@@ -395,6 +427,19 @@ function DisplayStudentsDetails({ branch, selectTeach, period }) {
                     )
                   );
                 })}
+
+                <tr className="bg-slate-50 text-md">
+                  <td>Teacher name:</td>
+                  {classno.map((e) => {
+                    return (
+                      <td key={`${academicyear}${branch}${section}${e}`}>
+                        {localStorage.getItem(
+                          `${academicyear}${branch}${section}${e}`
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
               </tbody>
             </table>
           </div>

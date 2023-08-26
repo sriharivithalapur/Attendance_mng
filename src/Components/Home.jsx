@@ -26,8 +26,8 @@ function Home({
     console.log(url);
     const data = await axios.get(url);
     const d = data.data.data[0];
-    setTeach([...d.slice(1, d.length)]);
-    console.log([...d.slice(1, d.length)]);
+    setTeach([...d.slice(1, d.length), "Admin"]);
+    console.log([...d.slice(1, d.length), "Admin"]);
   };
 
   useEffect(() => {
@@ -219,6 +219,7 @@ function Home({
             <option value="IV">IV</option>
             <option value="V">V</option>
             <option value="VI">VI</option>
+            <option value="">All</option>
           </select>
         </section>
 
@@ -241,6 +242,7 @@ function Home({
             <option disabled selected>
               Select Teacher Name{" "}
             </option>
+
             {teach && !isloading ? (
               teach.map((n, i) => {
                 return (
